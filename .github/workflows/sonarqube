@@ -1,0 +1,28 @@
+name: SonarQube Analysis
+
+on:
+  push:
+    branches:
+      - main  # Update this with the appropriate branch name
+
+jobs:
+  sonarqube:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: 11
+
+      - name: Run SonarQube analysis
+        run: |
+          # Replace the SonarQube server URL, token, and organization key with your own values
+          ./gradlew sonarqube \
+            -Dsonar.projectKey=my_project_key \
+            -Dsonar.organization=my_organization_key \
+            -Dsonar.host.url=https://sonarqube.example.com \
+            -Dsonar.login=my_sonarqube_token
