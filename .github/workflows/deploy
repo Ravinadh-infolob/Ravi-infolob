@@ -1,0 +1,36 @@
+name: Docker Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
+    - name: Log in to Docker registry
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    
+    - name: Pull Docker image
+      run: docker pull your-image-name
+    
+    - name: Install and configure kubectl
+      run: |
+        VERSION=$(curl --silent https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+        curl --silent https://storage.googleapis.com/kubernetes-release/release/$VERSION/bin/linux/amd64/kubectl \
+          --location \
+          --remote-name
+        chmod +x kubectl
+        sudo mv kubectl /usr/local/bin/
+        echo ${{ secrets.KUBECONFIG }} | base64 --decode > kubeconfig.yaml
+        export KUBECONFIG=kubeconfig.yaml
+    
+    - name: Update Kubernetes deployment
+      run: |
+        IMAGE_TAG=$(docker inspect --format='{{.Id}}' your-image-name)
+        kubectl set image deployment/your-deployment-name your-container-name=your-image-name:$IMAGE_TAG
