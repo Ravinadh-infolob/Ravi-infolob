@@ -1,3 +1,3 @@
 FROM centos
-RUN touchfile1
+RUN touch file1
 
