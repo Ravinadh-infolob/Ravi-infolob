@@ -21,4 +21,4 @@ jobs:
         run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/Ravi-infolob
 
       - name: Docker Push
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/Ravi-infolob
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/infolob
