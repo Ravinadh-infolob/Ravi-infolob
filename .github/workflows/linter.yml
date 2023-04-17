@@ -23,7 +23,7 @@ jobs:
       if: success() # Only create pull request if the linting is successful
       uses: peter-evans/create-pull-request@v3
       with:
-        token: ${{ secrets.GITHUB_TOKEN }} # Required for creating pull request
+        token: ${{ secrets.GIT_TOKEN }} # Required for creating pull request
         branch: lint-fixes # Specify the branch name for the pull request
         commit-message: "Fix linting issues"
         title: "Fix linting issues"
@@ -33,7 +33,7 @@ jobs:
       if: success() # Only merge pull request if it was created successfully
       uses: pullreminders/merge-action@v5
       with:
-        token: ${{ secrets.GITHUB_TOKEN }} # Required for merging pull request
+        token: ${{ secrets.GIT_TOKEN }} # Required for merging pull request
         pull_request: ${{ steps.create_pull_request.outputs.pull_request_number }} # Reference to the created pull request
 
     - name: Delete branch
