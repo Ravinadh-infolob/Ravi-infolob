@@ -1,5 +1,4 @@
-name: Linter
-
+name: Linter file
 on:
   push:
     branches:
