@@ -1,4 +1,4 @@
-name: linter code
+name: linter code test
 
 on:
   push:
